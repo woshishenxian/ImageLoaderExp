@@ -6,18 +6,21 @@ import java.io.OutputStream;
 
 public class MyUtils {
 
-	public static void  close(InputStream in){
-		try {
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	public static void  close(OutputStream out){
-		try {
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    public static void close(InputStream in) {
+        try {
+            if (in != null)
+                in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void close(OutputStream out) {
+        try {
+            if (out != null)
+                out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

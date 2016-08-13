@@ -1,5 +1,6 @@
 package com.vince.imageloaderexp.library;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -208,9 +209,8 @@ public class ImageLoader {
             return null;
         String key = hashKeyFormUrl(url);
         DiskLruCache.Editor editor = mDiskLruCache.edit(key);
-        if (editor != null) {
-            OutputStream outputStream = editor
-                    .newOutputStream(DISK_CACHE_INDEX);
+        if (editor != null ) {
+            OutputStream outputStream = editor.newOutputStream(DISK_CACHE_INDEX);
             if (downloadUrlToStream(url, outputStream)) {
                 editor.commit();
             } else {
@@ -223,7 +223,7 @@ public class ImageLoader {
     }
 
     //
-    public Bitmap loadBitmapForDiskCache(String url, int reqWidth, int reqHeight)
+    private Bitmap loadBitmapForDiskCache(String url, int reqWidth, int reqHeight)
             throws IOException {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             Log.w(TAG, "load bitmap from UI Thread , it's not recommended");
@@ -266,6 +266,8 @@ public class ImageLoader {
         } catch (Exception e) {
             Log.e(TAG, "downloadBitmap failed ." + e);
         } finally {
+            if(urlConnection !=null)
+                urlConnection.disconnect();
             MyUtils.close(out);
             MyUtils.close(in);
         }
@@ -295,9 +297,8 @@ public class ImageLoader {
 
     private String hashKeyFormUrl(String url) {
         String cacheKey;
-        MessageDigest mDigest;
         try {
-            mDigest = MessageDigest.getInstance("MD5");
+           final MessageDigest mDigest = MessageDigest.getInstance("MD5");
             mDigest.update(url.getBytes());
             cacheKey = bytesToHexString(mDigest.digest());
         } catch (NoSuchAlgorithmException e) {
@@ -311,7 +312,7 @@ public class ImageLoader {
         for (int i = 0; i < bytes.length; i++) {
             String hex = Integer.toHexString(0xFF & bytes[i]);
             if (hex.length() == 1) {
-                sb.append("0");
+                sb.append('0');
             }
             sb.append(hex);
         }
@@ -320,7 +321,7 @@ public class ImageLoader {
 
     public File getDiskChaheDir(Context context, String uniqueName) {
         boolean externalStorageAvailable = Environment
-                .getExternalStorageDirectory()
+                .getExternalStorageState()
                 .equals(Environment.MEDIA_MOUNTED);
         final String cachePath;
         if (externalStorageAvailable) {
@@ -331,12 +332,13 @@ public class ImageLoader {
         return new File(cachePath + File.separator + uniqueName);
     }
 
+    @TargetApi(VERSION_CODES.GINGERBREAD)
     private long getUsableSpace(File path) {
         if (Build.VERSION.SDK_INT >= VERSION_CODES.GINGERBREAD) {
             return path.getUsableSpace();
         }
         final StatFs stats = new StatFs(path.getPath());
-        return stats.getBlockSize() * (long) stats.getAvailableBlocks();
+        return (long)stats.getBlockSize() * (long) stats.getAvailableBlocks();
     }
 
     private static class LoaderResult {
