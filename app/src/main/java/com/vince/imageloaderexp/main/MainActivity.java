@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements TngouContract.Vie
     @Override
     protected void onResume() {
         super.onResume();
-        mTngouPresenter.loadTngouData();
+//        mTngouPresenter.loadTngouData();
+        mTngouPresenter.load12306Data();
     }
 
     @Override
@@ -70,5 +71,10 @@ public class MainActivity extends AppCompatActivity implements TngouContract.Vie
     @Override
     public void setPresenter(TngouContract.Presenter presenter) {
 
+    }
+
+    @Override
+    public void onUpdateSuccess(String content) {
+        Toast.makeText(this,content,Toast.LENGTH_LONG).show();
     }
 }

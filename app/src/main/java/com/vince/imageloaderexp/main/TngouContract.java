@@ -15,6 +15,7 @@ public interface TngouContract {
     interface View extends BaseView<Presenter> {
 
         void onUpdateSuccess(List<Tngou> tngous);
+        void onUpdateSuccess(String content);
 
         boolean isActive();
 
@@ -28,5 +29,6 @@ public interface TngouContract {
 
     interface Presenter extends BasePresenter {
        void loadTngouData();
+        void load12306Data();
     }
 }

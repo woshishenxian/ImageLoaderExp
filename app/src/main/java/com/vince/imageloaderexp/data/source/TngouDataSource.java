@@ -18,6 +18,14 @@ public interface TngouDataSource {
         void onDataNotAvailable(String msg);
     }
 
+    interface Load12306Back{
+        void onTasksLoaded(String content);
+
+        void onDataNotAvailable(String msg);
+    }
+
     void loadTngouData(@NonNull LoadTngouCallBack callBack);
+
+    void load12306(@NonNull Load12306Back callBack);
 
 }

@@ -1,7 +1,12 @@
 package com.vince.imageloaderexp.api;
 
+import com.vince.imageloaderexp.IApplicaiton;
+
 import java.util.Observable;
 
+import javax.net.ssl.SSLContext;
+
+import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -35,8 +40,14 @@ public class RetrofitManager {
     }
 
     private void initRetrofit(){
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(IApplicaiton.sslParams.sSLSocketFactory,IApplicaiton.sslParams.trustManager)
+                .build();
+
+
         retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("http://www.tngou.net/tnfs/api/").client(new OkHttpClient.Builder().build())
+                .baseUrl("http://www.tngou.net/tnfs/api/").client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
     }
 

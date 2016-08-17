@@ -46,4 +46,24 @@ public class TngouPresenter implements TngouContract.Presenter {
         });
     }
 
+    @Override
+    public void load12306Data() {
+        if(!mTngouView.isActive()){
+            return;
+        }
+        mTngouView.showLoading();
+        mTngouRepository.load12306(new TngouDataSource.Load12306Back() {
+            @Override
+            public void onTasksLoaded(String content) {
+                mTngouView.onUpdateSuccess(content);
+                mTngouView.dismissLoading();
+            }
+
+            @Override
+            public void onDataNotAvailable(String msg) {
+                mTngouView.dismissLoading();
+                mTngouView.onUpdateFailed(msg);
+            }
+        });
+    }
 }

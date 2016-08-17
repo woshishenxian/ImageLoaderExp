@@ -34,4 +34,9 @@ public class TngouRepository implements TngouDataSource{
     public void loadTngouData(@NonNull LoadTngouCallBack callBack) {
         mTngouDataSourceImpl.loadTngouData(callBack);
     }
+
+    @Override
+    public void load12306(@NonNull Load12306Back callBack) {
+        mTngouDataSourceImpl.load12306(callBack);
+    }
 }

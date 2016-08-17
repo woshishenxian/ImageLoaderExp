@@ -14,4 +14,7 @@ public interface TngouApiService {
 
     @GET("list")
     Observable<TngouVo> getData();
+
+    @GET("https://kyfw.12306.cn/otn/")
+    Observable<Object> get12306();
 }

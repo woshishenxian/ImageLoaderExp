@@ -50,4 +50,26 @@ public class TngouDataSourceImpl implements TngouDataSource {
                     }
                 });
     }
+
+    @Override
+    public void load12306(@NonNull final Load12306Back callBack) {
+        service.get12306().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        callBack.onTasksLoaded("请求成功");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callBack.onDataNotAvailable("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        callBack.onTasksLoaded("请求成功");
+                    }
+                });
+    }
 }
