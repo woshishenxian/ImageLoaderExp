@@ -2,11 +2,6 @@ package com.vince.imageloaderexp.api;
 
 import com.vince.imageloaderexp.IApplicaiton;
 
-import java.util.Observable;
-
-import javax.net.ssl.SSLContext;
-
-import okhttp3.CertificatePinner;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -20,7 +15,10 @@ public class RetrofitManager {
 
     Retrofit retrofit;
 
-    private static class RetrofitManagerHolder{
+
+
+
+    private static class RetrofitManagerHolder {
         static final RetrofitManager instance = new RetrofitManager();
 
     }
@@ -29,20 +27,20 @@ public class RetrofitManager {
         initRetrofit();
     }
 
-    public static RetrofitManager getInstance(){
+    public static RetrofitManager getInstance() {
         return RetrofitManagerHolder.instance;
     }
 
-    public Retrofit getRetrofit(){
-        if(retrofit == null)
+    public Retrofit getRetrofit() {
+        if (retrofit == null)
             initRetrofit();
         return retrofit;
     }
 
-    private void initRetrofit(){
+    private void initRetrofit() {
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .sslSocketFactory(IApplicaiton.sslParams.sSLSocketFactory,IApplicaiton.sslParams.trustManager)
+                .sslSocketFactory(IApplicaiton.sslParams.sSLSocketFactory, IApplicaiton.sslParams.trustManager)
                 .build();
 
 
