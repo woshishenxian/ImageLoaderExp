@@ -1,7 +1,9 @@
 package com.vince.imageloaderexp;
 
 import android.app.Application;
+import android.content.pm.PackageManager;
 
+import com.alipay.euler.andfix.patch.PatchManager;
 import com.vince.imageloaderexp.api.HttpsUtils;
 
 import java.io.InputStream;
@@ -16,7 +18,5 @@ public class IApplicaiton extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
-        sslParams =
-                HttpsUtils.getSslSocketFactory(new InputStream[]{getResources().openRawResource(R.raw.srca)},null,null);
     }
 }

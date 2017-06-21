@@ -1,6 +1,7 @@
 package com.vince.imageloaderexp.widget;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -25,5 +26,10 @@ public class SquareImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+    }
+
+    @Override
+    public void invalidateDrawable(Drawable dr) {
+        super.invalidateDrawable(dr);
     }
 }

@@ -55,4 +55,7 @@ public class TngouAdapter extends RecyclerView.Adapter<TngouAdapter.ViewHolder>{
             mSquareImageView = (SquareImageView) itemView.findViewById(R.id.mSquareImageView);
         }
     }
+
+
+
 }

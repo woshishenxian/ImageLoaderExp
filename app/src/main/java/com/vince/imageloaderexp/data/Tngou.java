@@ -1,10 +1,14 @@
 package com.vince.imageloaderexp.data;
 
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by vince on 16/8/11.
  */
 
-public class Tngou {
+public class Tngou{
 
     private static final String BASE_URL = "http://tnfs.tngou.net/image";
 
